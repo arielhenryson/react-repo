@@ -30,6 +30,11 @@ lerna-debug.log*
 # Environment variables file
 .env
 
+# db folder
+/data/
+/mongo_data/
+redis_data
+
 
 .nx/cache
 .nx/workspace-data
