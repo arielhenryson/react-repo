@@ -1,9 +1,3 @@
-# **PolicyHub**
-
-PolicyHub is an AI-powered editor designed to help bank employees efficiently create and edit policies. With a vast number of policy documents in play, PolicyHub streamlines the editing process using intelligent assistance, making policy management faster and more accurate.
-
----
-
 ## **Technology Stack**
 
 ### Frontend
