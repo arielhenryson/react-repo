@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ClientsModule, Transport } from '@nestjs/microservices'
+import { EventBusService } from './event-bus.service'
 
 @Module({
   imports: [
@@ -43,7 +44,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices'
       },
     ]),
   ],
-  providers: [],
+  providers: [EventBusService],
   exports: [],
 })
 export class EventBusModule {}
