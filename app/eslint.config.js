@@ -52,11 +52,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
 
-      // REMOVE manual stylistic rules handled by Prettier
-      // '@typescript-eslint/semi': ['error', 'never'], // REMOVED - Let Prettier handle this via prettierRecommended
-
-      // Add any other specific rule overrides here if necessary
-      // e.g., '@typescript-eslint/no-unused-vars': 'warn',
+      'comma-dangle': ['error', 'always-multiline'],
     },
   },
 )
