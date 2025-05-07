@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router' // Use react-router-dom for navigate
 import { useState } from 'react' // Import useState for loading state
 import { login } from '../../services/auth/auth'
+import { Button } from '@/components/ui/button'
 
 // Assuming you have PrimeIcons or a similar icon library set up,
 // if not, you might need to replace these with actual icons or SVGs.
@@ -36,10 +37,11 @@ export default function Login() {
               Sign in to your account
             </h2>
 
-            <button
+            <Button
+              variant="default"
               onClick={handleLogin}
               disabled={loading}
-              className="w-full flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="w-full flex "
             >
               {loading ? (
                 <i className="pi pi-spin pi-spinner mr-2"></i>
@@ -47,7 +49,7 @@ export default function Login() {
                 <i className="pi pi-sign-in mr-2"></i>
               )}
               Sign in
-            </button>
+            </Button>
           </div>
         </div>
       </div>
