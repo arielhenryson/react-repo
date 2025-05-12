@@ -5,6 +5,7 @@ import { DBModule } from './libs/db/db.module'
 import { ConfigModule } from '@nestjs/config'
 import { validationSchema } from './libs/db/config/config.validation'
 import { EventBusModule } from './libs/event-bus/event-bus.module'
+import { AuthModule } from './libs/auth/auth.module'
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,6 +13,7 @@ import { EventBusModule } from './libs/event-bus/event-bus.module'
       isGlobal: true,
       validationSchema: validationSchema(),
     }),
+    AuthModule,
     DBModule,
     EventBusModule,
   ],
