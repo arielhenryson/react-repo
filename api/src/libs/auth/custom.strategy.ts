@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/prefer-promise-reject-errors */
+
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -27,6 +27,8 @@ export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
     const requestAgent = await createHttpsAgent(process.env.EXTRA_CA_CERTS)
 
     const jwksUri = process.env.JWKS_ADDRESS
+
+    console.log(jwksUri)
     this.client = jwksClient({
       // @ts-ignore
       jwksUri,
@@ -39,6 +41,8 @@ export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
 
   async validate(req: Request) {
     const authHeader = req.headers['authorization']
+
+    console.log(authHeader)
     if (!authHeader) {
       throw new UnauthorizedException('Authorization header missing')
     }
@@ -51,9 +55,12 @@ export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
     try {
       const decoded: any = await this.validateToken(token)
 
+      console.log(decoded)
+
       // Return an object that includes the user ID
       return { uid: decoded.sub }
-    } catch {
+    } catch (e) {
+      console.log('Invalid token', e)
       throw new UnauthorizedException('Invalid token')
     }
   }

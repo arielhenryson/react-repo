@@ -26,5 +26,9 @@ export function validationSchema() {
     // The KAFKA_GROUP_ID environment variable is used to store the group ID
     // for the Kafka consumer that the application should connect to.
     KAFKA_GROUP_ID: Joi.string().required(),
+
+    // The JWKS_ADDRESS environment variable is used to store the URL of the
+    // JSON Web Key Set (JWKS) endpoint for the authentication server.
+    JWKS_ADDRESS: Joi.string().required(),
   })
 }

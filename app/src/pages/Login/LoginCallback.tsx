@@ -1,9 +1,24 @@
-export default function LoginCallback() {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-2xl p-8 max-w-md w-full text-center">
-        <h1 className="text-gray-600 mb-6">Login callback page</h1>
-      </div>
-    </div>
-  )
+import { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router'
+import { handleCallback } from '../../services/auth/auth'
+
+const CallbackPage = () => {
+  const navigate = useNavigate()
+  const hasRun = useRef(false)
+
+  useEffect(() => {
+    const processCallback = async () => {
+      if (!hasRun.current) {
+        hasRun.current = true
+        const res = await handleCallback()
+        navigate(res ? '/' : '/login')
+      }
+    }
+
+    processCallback()
+  }, [navigate])
+
+  return <div>Processing login...</div>
 }
+
+export default CallbackPage
