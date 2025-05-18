@@ -25,5 +25,17 @@ export function validationSchema() {
     // The JWKS_ADDRESS environment variable is used to store the URL of the
     // JSON Web Key Set (JWKS) endpoint for the authentication server.
     JWKS_ADDRESS: Joi.string().required(),
+
+    // The S3_ACCESS_KEY environment variable is used to store the access key
+    // for the S3 server.
+    S3_ACCESS_KEY: Joi.string().required(),
+
+    // The S3_SECRET_KEY environment variable is used to store the secret key
+    // for the S3 server.
+    S3_SECRET_KEY: Joi.string().required(),
+
+    // The S3_ENDPOINT environment variable is used to store the endpoint for the
+    // S3 server.
+    S3_ENDPOINT: Joi.string().required(),
   })
 }
