@@ -1,50 +1,38 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { ClientsModule, Transport } from '@nestjs/microservices'
-import { EventBusService } from './event-bus.service'
+import { ConfigModule } from '@nestjs/config'
+import { BullModule } from '@nestjs/bullmq'
+import { queueConfig } from './config'
+import { TestQueueProducers } from './services/test-queue.producers'
+import { QueueNames } from './types'
+import { BullBoardModule } from '@bull-board/nestjs'
+import { ExpressAdapter } from '@bull-board/express'
+import { BullMQAdapter } from '@bull-board/api/bullMQAdapter'
+import { TestQueueConsumer } from './services/test-queue.consumer'
+
+const dashboardURI = 'queues-dash' + Math.random().toString(36).substring(7)
+
+console.log('bull board dashboard uri', dashboardURI)
 
 @Module({
   imports: [
-    ConfigModule, // make sure ConfigService is available
-    ClientsModule.registerAsync([
-      {
-        name: 'KAFKA_SERVICE',
-        imports: [ConfigModule],
-        useFactory: (configService: ConfigService) => {
-          const clientId = configService.get<string>('KAFKA_CLIENT_ID')
-          if (!clientId) {
-            throw new Error('KAFKA_CLIENT_ID is required')
-          }
+    ConfigModule,
+    BullModule.forRootAsync(queueConfig),
+    BullModule.registerQueue({
+      name: QueueNames.TEST_QUEUE,
+    }),
+    BullBoardModule.forFeature({
+      name: QueueNames.TEST_QUEUE,
+      adapter: BullMQAdapter,
+    }),
 
-          const brokers = configService.get<string>('KAFKA_BROKERS')?.split(',')
-
-          if (!brokers) {
-            throw new Error('KAFKA_BROKERS is required')
-          }
-          const groupId = configService.get<string>('KAFKA_GROUP_ID')
-
-          if (!groupId) {
-            throw new Error('KAFKA_GROUP_ID is required')
-          }
-
-          return {
-            transport: Transport.KAFKA,
-            options: {
-              client: {
-                clientId,
-                brokers,
-              },
-              consumer: {
-                groupId,
-              },
-            },
-          }
-        },
-        inject: [ConfigService],
-      },
-    ]),
+    // dashboard for debug
+    BullBoardModule.forRoot({
+      // create route with random uid
+      route: dashboardURI,
+      adapter: ExpressAdapter,
+    }),
   ],
-  providers: [EventBusService],
-  exports: [],
+  providers: [TestQueueProducers, TestQueueConsumer],
+  exports: [TestQueueProducers],
 })
 export class EventBusModule {}

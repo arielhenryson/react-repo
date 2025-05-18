@@ -28,7 +28,6 @@ export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
 
     const jwksUri = process.env.JWKS_ADDRESS
 
-    console.log(jwksUri)
     this.client = jwksClient({
       // @ts-ignore
       jwksUri,
