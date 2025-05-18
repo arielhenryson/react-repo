@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config'
 import { validationSchema } from './libs/db/config/config.validation'
 import { AuthModule } from './libs/auth/auth.module'
 import { EventBusModule } from './libs/event-bus/event-bus.module'
+import { FileStorageModule } from './libs/file-storage/file-storage.module'
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +17,7 @@ import { EventBusModule } from './libs/event-bus/event-bus.module'
     AuthModule,
     DBModule,
     EventBusModule,
+    FileStorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
