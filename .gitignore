@@ -32,8 +32,9 @@ lerna-debug.log*
 
 # db folder
 /data/
-/mongo_data/
-redis_data
+/dev/mongo_data/
+/dev/minio_data/
+/dev/redis_data
 
 
 .nx/cache
