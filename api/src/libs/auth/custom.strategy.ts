@@ -77,12 +77,20 @@ export class CustomStrategy extends PassportStrategy(Strategy, 'custom') {
         })
       }
 
-      jwt.verify(token, getKey, (err, decoded) => {
-        if (err) {
-          return reject(err)
-        }
-        resolve(decoded)
-      })
+      jwt.verify(
+        token,
+        getKey,
+        {
+          algorithms: ['RS256'],
+          issuer: process.env.JWT_ISSUER,
+        },
+        (err, decoded) => {
+          if (err) {
+            return reject(err)
+          }
+          resolve(decoded)
+        },
+      )
     })
   }
 }
